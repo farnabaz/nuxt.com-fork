@@ -3,7 +3,7 @@ import type { Agency } from '~/types'
 
 const route = useRoute()
 
-const { data: agency } = await useAsyncData(route.path, () => queryContent<Agency>(route.path).findOne())
+const { data: agency } = await useAsyncData(route.path, () => queryContentV3(route.path).findOne())
 if (!agency.value) {
   throw createError({ statusCode: 404, statusMessage: 'Agency not found', fatal: true })
 }

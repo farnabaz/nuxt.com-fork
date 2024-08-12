@@ -5,12 +5,12 @@ import type { Hosting } from '~/types'
 const route = useRoute()
 const { slug } = route.params
 
-const { data: provider } = await useAsyncData(route.path, () => queryContent<Hosting>(route.path).findOne())
+const { data: provider } = await useAsyncData(route.path, () => queryContentV3(route.path).findOne())
 if (!provider.value) {
   throw createError({ statusCode: 404, statusMessage: 'Hosting Platform not found', fatal: true })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () => queryContent('/deploy')
+const { data: surround } = await useAsyncData(`${route.path}-surround`, () => queryContentV3('/deploy')
   .where({ _extension: 'md' })
   .without(['body', 'excerpt'])
   .sort({ featured: 1 })

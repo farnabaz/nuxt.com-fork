@@ -1,7 +1,9 @@
-import { serverQueryContent } from '#content/server'
-
 export default eventHandler(async (event) => {
-  const { templates } = await serverQueryContent(event, '/templates').only('templates').findOne()
+  const templates = await $fetch('/api/content/query', {
+    query: {
+      q: `SELECT * FROM content WHERE path = '/templates' AND _partial = false AND _draft = false`
+    }
+  }).then(res => res[0].body.templates)
 
   return templates.map(template => ({
     slug: template.slug,

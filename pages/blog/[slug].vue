@@ -5,12 +5,12 @@ import type { BlogArticle } from '~/types'
 const route = useRoute()
 const { copy } = useCopyToClipboard()
 
-const { data: article } = await useAsyncData(route.path, () => queryContent<BlogArticle>(route.path).findOne())
+const { data: article } = await useAsyncData(route.path, () => queryContentV3(route.path).findOne())
 if (!article.value) {
   throw createError({ statusCode: 404, statusMessage: 'Article not found', fatal: true })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () => queryContent('/blog')
+const { data: surround } = await useAsyncData(`${route.path}-surround`, () => queryContentV3('/blog')
   .where({ _extension: 'md' })
   .without(['body', 'excerpt'])
   .sort({ date: -1 })

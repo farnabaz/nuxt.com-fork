@@ -1,10 +1,13 @@
 // TODO: Update later
 import { SitemapStream, streamToPromise } from 'sitemap'
 import type { H3Event } from 'h3'
-import { serverQueryContent } from '#content/server'
 
 export default defineEventHandler(async (event: H3Event) => {
-  const docs = await serverQueryContent(event).find()
+  const docs = await $fetch('/api/content/query', {
+    query: {
+      q: 'SELECT * FROM content'
+    }
+  })
 
   const sitemap = new SitemapStream({
     hostname: 'https://nuxt.com'

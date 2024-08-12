@@ -7,7 +7,7 @@ const navigation = inject<Ref<NavItem[]>>('navigation')
 const route = useRoute()
 const { navKeyFromPath } = useContentHelpers()
 
-const { data: page } = await useAsyncData(route.path, () => queryContent(route.path).findOne())
+const { data: page } = await useAsyncData(route.path, () => queryContents('docs').path(route.path).first())
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
@@ -16,7 +16,7 @@ const { data: surround } = await useAsyncData(`${route.path}-surround`, async ()
   if (page.value.surround === false) {
     return []
   }
-  return queryContent('/docs')
+  return queryContentV3('/docs')
     .where({ _extension: 'md', navigation: { $ne: false } })
     .without(['body', 'excerpt'])
     .findSurround(withoutTrailingSlash(route.path))

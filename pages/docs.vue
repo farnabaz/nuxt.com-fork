@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { NavItem } from '@nuxt/content/dist/runtime/types'
+import type { ContentNavigationItem } from '@farnabaz/content-next'
 
-const navigation = inject<Ref<NavItem[]>>('navigation')
+const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
 defineOgImageComponent('Docs')
 
@@ -24,7 +24,6 @@ const navigationLinks = computed(() => {
       <template #left>
         <UAside :links="links">
           <UDivider type="dashed" class="mb-6" />
-
           <UNavigationTree :links="navigationLinks" default-open :multiple="false" />
         </UAside>
       </template>

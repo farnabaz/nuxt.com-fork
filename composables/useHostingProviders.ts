@@ -9,7 +9,7 @@ export const useHostingProviders = () => {
     }
 
     try {
-      const data = await queryContent<Hosting>('/deploy')
+      const data = await queryContentV3<Hosting>('/deploy')
         .where({ _extension: 'md' })
         .without(['body', 'excerpt'])
         .sort({ date: -1 })

@@ -4,7 +4,7 @@ import type { Hosting } from '../../types'
 const route = useRoute()
 const { fetchList, providers } = useHostingProviders()
 
-const { data: page } = await useAsyncData(route.path, () => queryContent(route.path).findOne())
+const { data: page } = await useAsyncData(route.path, () => queryContentV3(route.path).findOne())
 
 const title = page.value.head?.title || page.value.title
 const description = page.value.head?.description || page.value.description

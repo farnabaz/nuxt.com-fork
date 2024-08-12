@@ -1,6 +1,5 @@
 import { Feed } from 'feed'
 import { joinURL } from 'ufo'
-import { serverQueryContent } from '#content/server'
 
 export default defineEventHandler(async (event) => {
   const baseUrl = 'https://nuxt.com'
@@ -19,10 +18,11 @@ export default defineEventHandler(async (event) => {
     }
   })
 
-  const articles = await serverQueryContent(event, '/blog')
-    .sort({ date: -1 })
-    .where({ _partial: false, _draft: false, _type: 'markdown' })
-    .find()
+  const articles = await $fetch('/api/content/query', {
+    query: {
+      q: `SELECT * FROM content WHERE _type = 'markdown' AND path LIKE '/blog%' AND _partial = false AND _draft = false`
+    }
+  })
 
   for (const article of articles) {
     feed.addItem({

@@ -1,6 +1,7 @@
 import { ofetch } from 'ofetch'
 import { logger } from '@nuxt/kit'
 import { isWindows } from 'std-env'
+import { defineNuxtConfig } from 'nuxt/config'
 
 function normalizedDirPath(path?: string) {
   if (!path || !isWindows) {
@@ -48,11 +49,16 @@ export default defineNuxtConfig({
   extends: [
     process.env.NUXT_UI_PRO_PATH || '@nuxt/ui-pro'
   ],
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+  build: {
+    transpile: ['@farnabaz/content-next']
+  },
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore Type circular reference
   modules: [
-    'nuxt-content-twoslash',
+    // 'nuxt-content-twoslash',
+    '@nuxthub/core',
     'nuxt-build-cache',
+    '@farnabaz/content-next',
     '@nuxt/content',
     '@nuxt/ui',
     '@nuxt/image',
@@ -62,7 +68,7 @@ export default defineNuxtConfig({
     '@nuxtjs/turnstile',
     '@nuxthq/studio',
     '@vueuse/nuxt',
-    'nuxt-og-image',
+    // 'nuxt-og-image',
     () => {
       if (docsSourceBase) {
         logger.success(`Using local Nuxt docs from ${docsSourceBase}`)
@@ -72,6 +78,9 @@ export default defineNuxtConfig({
       }
     }
   ],
+  hub: {
+    database: true
+  },
   routeRules: {
     // Pre-render
     '/api/search.json': { prerender: true },
@@ -108,6 +117,9 @@ export default defineNuxtConfig({
     '/enterprise': { redirect: '/enterprise/support', prerender: false }
   },
   nitro: {
+    experimental: {
+      // wasm: true
+    },
     prerender: {
       // failOnError: false
       // TODO: investigate
@@ -154,43 +166,47 @@ export default defineNuxtConfig({
       baseURL: 'https://ipx.nuxt.com'
     }
   },
+  contentV3: {
+    database: 'nuxthub'
+  },
   content: {
     navigation: {
       fields: ['titleTemplate']
     },
     sources: {
-      docsSource,
-      examplesSource
+      // docsSource,
+      // examplesSource
     },
-    highlight: {
-      theme: {
-        default: 'material-theme-lighter',
-        dark: 'material-theme-palenight'
-      },
-      langs: [
-        'js',
-        'ts',
-        'vue',
-        'css',
-        'scss',
-        'sass',
-        'html',
-        'bash',
-        'md',
-        'mdc',
-        'json'
-      ]
-    }
+    highlight: false
+    // highlight: {
+    //   theme: {
+    //     default: 'material-theme-lighter',
+    //     dark: 'material-theme-palenight'
+    //   },
+    //   langs: [
+    //     'js',
+    //     'ts',
+    //     'vue',
+    //     'css',
+    //     'scss',
+    //     'sass',
+    //     'html',
+    //     'bash',
+    //     'md',
+    //     'mdc',
+    //     'json'
+    //   ]
+    // }
   },
-  twoslash: {
-    floatingVueOptions: {
-      classMarkdown: 'prose prose-primary dark:prose-invert'
-    },
-    // Skip Twoslash in dev to improve performance. Turn this on when you want to explictly test twoslash in dev.
-    enableInDev: false,
-    // Do not throw when twoslash fails, the typecheck should be down in github.com/nuxt/nuxt's CI
-    throws: false
-  },
+  // twoslash: {
+  //   floatingVueOptions: {
+  //     classMarkdown: 'prose prose-primary dark:prose-invert'
+  //   },
+  //   // Skip Twoslash in dev to improve performance. Turn this on when you want to explictly test twoslash in dev.
+  //   enableInDev: false,
+  //   // Do not throw when twoslash fails, the typecheck should be down in github.com/nuxt/nuxt's CI
+  //   throws: false
+  // },
   eslint: {
     config: {
       stylistic: {

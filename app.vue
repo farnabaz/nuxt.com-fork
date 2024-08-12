@@ -8,7 +8,10 @@ const colorMode = useColorMode()
 const { headerLinks, searchGroups, searchLinks } = useNavigation()
 const color = computed(() => colorMode.value === 'dark' ? '#020420' : 'white')
 
-const { data: navigation } = await useLazyAsyncData('navigation', () => fetchContentNavigation(), { default: () => [] })
+const { data: navigation } = await useLazyAsyncData('navigation', () => {
+  // return fetchContentNavigation()
+  return $fetch('/api/docs/navigation')
+}, { default: () => [] })
 const { data: files } = useLazyFetch<ParsedContent[]>('/api/search.json', {
   default: () => [],
   server: false
