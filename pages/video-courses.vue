@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { VideoCourse } from '../types'
 
-const { data: page } = await useAsyncData('video-courses', () => queryContentV3('/video-courses').findOne())
+const { data: page } = await useAsyncData('video-courses', () => queryContents('content').path('/video-courses').first())
 
 const title = page.value.head?.title || page.value.title
 const description = page.value.head?.description || page.value.description

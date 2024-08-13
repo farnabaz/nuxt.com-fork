@@ -5,7 +5,7 @@ import type { Hosting } from '~/types'
 const route = useRoute()
 const { slug } = route.params
 
-const { data: provider } = await useAsyncData(route.path, () => queryContentV3(route.path).findOne())
+const { data: provider } = await useAsyncData(route.path, () => queryContents('content').path(route.path).first())
 if (!provider.value) {
   throw createError({ statusCode: 404, statusMessage: 'Hosting Platform not found', fatal: true })
 }

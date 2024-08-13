@@ -6,7 +6,7 @@ const intervalId = ref()
 const route = useRoute()
 const { isOutside } = useMouseInElement(carousel)
 
-const { data: page } = await useAsyncData(route.path, () => queryContentV3(route.path).findOne())
+const { data: page } = await useAsyncData(route.path, () => queryContents('content').path(route.path).first())
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
