@@ -177,26 +177,25 @@ export default defineNuxtConfig({
       // docsSource,
       // examplesSource
     },
-    highlight: false
-    // highlight: {
-    //   theme: {
-    //     default: 'material-theme-lighter',
-    //     dark: 'material-theme-palenight'
-    //   },
-    //   langs: [
-    //     'js',
-    //     'ts',
-    //     'vue',
-    //     'css',
-    //     'scss',
-    //     'sass',
-    //     'html',
-    //     'bash',
-    //     'md',
-    //     'mdc',
-    //     'json'
-    //   ]
-    // }
+    highlight: {
+      theme: {
+        default: 'material-theme-lighter',
+        dark: 'material-theme-palenight'
+      },
+      langs: [
+        'js',
+        'ts',
+        'vue',
+        'css',
+        'scss',
+        'sass',
+        'html',
+        'bash',
+        'md',
+        'mdc',
+        'json'
+      ]
+    }
   },
   // twoslash: {
   //   floatingVueOptions: {
