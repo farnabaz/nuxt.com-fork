@@ -176,7 +176,8 @@ export default defineNuxtConfig({
     sources: {
       // docsSource,
       // examplesSource
-    }
+    },
+    highlight: false
     // highlight: {
     //   theme: {
     //     default: 'material-theme-lighter',
