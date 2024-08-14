@@ -18,15 +18,16 @@ export default defineEventHandler(async (event) => {
     }
   })
 
-  const articles = await $fetch('/api/content/query', {
-    query: {
-      q: `SELECT * FROM content WHERE _type = 'markdown' AND path LIKE '/blog%' AND _partial = false AND _draft = false`
-    }
-  })
+  // const articles = await $fetch('/api/content/query', {
+  //   query: {
+  //     q: `SELECT * FROM content WHERE _type = 'markdown' AND path LIKE '/blog%' AND _partial = false AND _draft = false`
+  //   }
+  // })
+  const articles = await queryContents('blog').where('extension', '=', 'md').where('path', 'LIKE', '/blog%').all()
 
   for (const article of articles) {
     feed.addItem({
-      link: joinURL(baseUrl, article._path),
+      link: joinURL(baseUrl, article.path),
       image: joinURL(baseUrl, article.image),
       title: article.title,
       date: new Date(article.date),
