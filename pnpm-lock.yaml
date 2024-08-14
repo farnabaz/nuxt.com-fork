@@ -16,8 +16,8 @@ importers:
   .:
     dependencies:
       '@farnabaz/content-next':
-        specifier: 1.19.0
-        version: 1.19.0(ioredis@5.4.1)(magicast@0.3.4)(nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.20.0)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(terser@5.31.3))(vue-tsc@2.0.16(typescript@5.5.4)))(rollup@4.20.0)(typescript@5.5.4)(vue@3.4.35(typescript@5.5.4))
+        specifier: 1.20.0
+        version: 1.20.0(ioredis@5.4.1)(magicast@0.3.4)(nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.20.0)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(terser@5.31.3))(vue-tsc@2.0.16(typescript@5.5.4)))(rollup@4.20.0)(typescript@5.5.4)(vue@3.4.35(typescript@5.5.4))
       '@iconify-json/heroicons':
         specifier: ^1.1.24
         version: 1.1.24
@@ -991,8 +991,8 @@ packages:
     resolution: {integrity: sha512-BsWiH1yFGjXXS2yvrf5LyuoSIIbPrGUWob917o+BTKuZ7qJdxX8aJLRxs1fS9n6r7vESrq1OUqb68dANcFXuQQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@farnabaz/content-next@1.19.0':
-    resolution: {integrity: sha512-V6TtljP37jHLNzONQ+KumR4j5GYZ3w1JCBAddnOimAy3UaRj9qJk/BoYrLqHzVflyQ24ZL05YAv7QxzlBtxtmw==}
+  '@farnabaz/content-next@1.20.0':
+    resolution: {integrity: sha512-0WLYMIIoKawrDQXPJgyJ4WUiu5THr9AbX/O1ib9OxnQqMNn1J0mhxyhcWujhA5wBaWtH2THuWnPM+v0ELcNZLQ==}
 
   '@fastify/accept-negotiator@1.1.0':
     resolution: {integrity: sha512-OIHZrb2ImZ7XG85HXOONLcJWGosv7sIvM2ifAPQVhg9Lv7qdmMBNVaai4QTdyuaqbKM5eO6sLSQOYI7wEQeCJQ==}
@@ -7316,7 +7316,7 @@ snapshots:
 
   '@eslint/object-schema@2.1.4': {}
 
-  '@farnabaz/content-next@1.19.0(ioredis@5.4.1)(magicast@0.3.4)(nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.20.0)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(terser@5.31.3))(vue-tsc@2.0.16(typescript@5.5.4)))(rollup@4.20.0)(typescript@5.5.4)(vue@3.4.35(typescript@5.5.4))':
+  '@farnabaz/content-next@1.20.0(ioredis@5.4.1)(magicast@0.3.4)(nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.20.0)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(terser@5.31.3))(vue-tsc@2.0.16(typescript@5.5.4)))(rollup@4.20.0)(typescript@5.5.4)(vue@3.4.35(typescript@5.5.4))':
     dependencies:
       '@nuxt/content': 2.13.2(ioredis@5.4.1)(magicast@0.3.4)(nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.1.0)(eslint@9.8.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.20.0)(terser@5.31.3)(typescript@5.5.4)(vite@5.3.5(@types/node@22.1.0)(terser@5.31.3))(vue-tsc@2.0.16(typescript@5.5.4)))(rollup@4.20.0)(vue@3.4.35(typescript@5.5.4))
       '@nuxt/kit': 3.12.3(magicast@0.3.4)(rollup@4.20.0)
