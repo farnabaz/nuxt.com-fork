@@ -22,6 +22,21 @@ const { data: surround } = await useAsyncData(`${route.path}-surround`, async ()
     .findSurround(withoutTrailingSlash(route.path))
 })
 
+function findPageBreadcrumb(navigation?: NavItem[], page): NavItem[] {
+  if (!navigation || !page) {
+    return []
+  }
+
+  return navigation.reduce((breadcrumb: NavItem[], link: NavItem) => {
+    if (page.path && (page.path + '/').startsWith(link.path + '/')) {
+      if (link.children) {
+        breadcrumb.push(link)
+        breadcrumb.push(...findPageBreadcrumb(link.children, page))
+      }
+    }
+    return breadcrumb
+  }, [])
+}
 const breadcrumb = computed(() => {
   const links = mapContentNavigation(findPageBreadcrumb(navigation.value, page.value)).map(link => ({
     label: link.label,
@@ -146,5 +161,8 @@ defineOgImageComponent('Docs', {
         </template>
       </UContentToc>
     </template>
+    <div class="hidden">
+      {{ navigation }}
+    </div>
   </UPage>
 </template>

@@ -56,7 +56,7 @@ export default defineNuxtConfig({
   // @ts-ignore Type circular reference
   modules: [
     // 'nuxt-content-twoslash',
-    '@nuxthub/core',
+    // '@nuxthub/core',
     'nuxt-build-cache',
     '@farnabaz/content-next',
     '@nuxt/content',
@@ -167,7 +167,7 @@ export default defineNuxtConfig({
     }
   },
   contentV3: {
-    database: 'nuxthub'
+    // database: 'nuxthub'
   },
   content: {
     navigation: {
