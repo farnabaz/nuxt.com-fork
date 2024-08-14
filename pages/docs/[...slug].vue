@@ -161,8 +161,5 @@ defineOgImageComponent('Docs', {
         </template>
       </UContentToc>
     </template>
-    <div class="hidden">
-      {{ navigation }}
-    </div>
   </UPage>
 </template>
