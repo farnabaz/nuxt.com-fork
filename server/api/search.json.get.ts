@@ -5,7 +5,7 @@ export default eventHandler(async (event) => {
   //   }
   // })
   const docs = await queryContents('content')
-    .where('_type', '=', 'markdown')
+    .where('extension', '=', 'md')
     .where('path', 'LIKE', '/docs%')
     .all()
   return docs

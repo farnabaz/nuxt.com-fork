@@ -5,7 +5,7 @@ import type { BlogArticle } from '~/types'
 const route = useRoute()
 const { copy } = useCopyToClipboard()
 
-const { data: article } = await useAsyncData(route.path, () => queryContents('content').path(route.path).first())
+const { data: article } = await useAsyncData(route.path, () => queryContents('blog').path(route.path).first())
 if (!article.value) {
   throw createError({ statusCode: 404, statusMessage: 'Article not found', fatal: true })
 }

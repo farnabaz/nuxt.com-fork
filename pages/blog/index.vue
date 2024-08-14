@@ -55,7 +55,7 @@ await fetchList()
           <UPageCard
             v-for="(article, index) in articles"
             :key="index"
-            :to="article._path"
+            :to="article.path"
             :title="article.title"
             :description="article.description"
             class="flex flex-col overflow-hidden"

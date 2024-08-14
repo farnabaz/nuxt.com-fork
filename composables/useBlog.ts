@@ -1,7 +1,8 @@
-import type { BlogArticle } from '../types'
+// import type { BlogArticle } from '../types'
+import type { Blog } from '#build/content/content'
 
 export const useBlog = () => {
-  const articles = useState<BlogArticle[]>('articles', () => [])
+  const articles = useState<Blog[]>('articles', () => [])
   // const featuredArticle: Ref<BlogArticle | {}> = useState('featured-article', () => ({}))
 
   // Data fetching
@@ -12,13 +13,18 @@ export const useBlog = () => {
     }
 
     try {
-      const data = await queryContentV3('/blog')
-        .where({ _extension: 'md' })
-        .without(['body', 'excerpt'])
-        .sort({ date: -1 })
-        .find()
+      // const data = await queryContentV3('/blog')
+      //   .where({ _extension: 'md' })
+      //   .without(['body', 'excerpt'])
+      //   .sort({ date: -1 })
+      //   .find()
+      const data = await queryContents('blog')
+        .where('path', 'LIKE', '/blog/%')
+        .where('extension', '=', 'md')
+        .order('date', 'DESC')
+        .all()
 
-      articles.value = (data as BlogArticle[]).filter(article => article._path !== '/blog')
+      articles.value = data
       // featuredArticle.value = articles.value?.shift() || {}
     }
     catch (e) {

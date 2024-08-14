@@ -23,8 +23,8 @@ defineOgImageComponent('Docs', {
 
 await fetchList()
 
-const featuredProviders = computed(() => providers.value.filter((provider: Hosting) => provider.featured === true))
-const otherProviders = computed(() => providers.value.filter((provider: Hosting) => provider.featured !== true))
+const featuredProviders = computed(() => providers.value.filter(provider => Boolean(provider.featured) === true))
+const otherProviders = computed(() => providers.value.filter(provider => Boolean(provider.featured) !== true))
 </script>
 
 <template>
@@ -36,12 +36,11 @@ const otherProviders = computed(() => providers.value.filter((provider: Hosting)
         <h2 class="text-gray-950 dark:text-white text-2xl font-semibold pb-4">
           Featured
         </h2>
-
         <UPageGrid>
           <UPageCard
             v-for="(deployment, index) in featuredProviders"
             :key="index"
-            :to="deployment._path"
+            :to="deployment.path"
             :title="deployment.title"
             :description="deployment.description"
             class="flex flex-col overflow-hidden"
@@ -72,7 +71,7 @@ const otherProviders = computed(() => providers.value.filter((provider: Hosting)
           <UPageCard
             v-for="(deployment, index) in otherProviders"
             :key="index"
-            :to="deployment._path"
+            :to="deployment.path"
             :title="deployment.title"
             :description="deployment.description"
             class="flex flex-col overflow-hidden"
