@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { defineCollection, contentSchema } from '@farnabaz/content-next'
 
-export const collections = {
-  docs: defineCollection({
+export const collections = [
+  defineCollection('docs', {
     type: 'page',
     source: {
       name: 'docs',
@@ -15,7 +15,7 @@ export const collections = {
     },
     schema: contentSchema
   }),
-  blog: defineCollection({
+  defineCollection('blog', {
     type: 'page',
     source: {
       name: 'blog',
@@ -37,7 +37,7 @@ export const collections = {
       category: z.string()
     })
   }),
-  deploy: defineCollection({
+  defineCollection('deploy', {
     type: 'page',
     source: {
       name: 'deploy',
@@ -57,4 +57,4 @@ export const collections = {
       date: z.date()
     })
   })
-}
+]

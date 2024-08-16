@@ -218,7 +218,7 @@ const _useNavigation = () => {
       return providers.value
         .filter(hosting => ['title'].map(field => hosting[field]).filter(Boolean).some(value => value.search(searchTextRegExp(q)) !== -1))
         .map(hosting => ({
-          id: `hosting-${hosting._path}`,
+          id: `hosting-${hosting.path}`,
           label: hosting.title,
           suffix: hosting.description,
           icon: hosting.logoIcon,
@@ -227,7 +227,7 @@ const _useNavigation = () => {
                 src: hosting.logoSrc
               }
             : undefined,
-          to: hosting._path
+          to: hosting.path
         }))
     }
   }, {
@@ -246,11 +246,11 @@ const _useNavigation = () => {
       return articles.value
         .filter(article => article.title.search(searchTextRegExp(q)) !== -1)
         .map(article => ({
-          id: `article-${article._path}`,
+          id: `article-${article.path}`,
           label: article.title,
           suffix: article.description,
           icon: 'i-ph-newspaper',
-          to: article._path
+          to: article.path
         }))
     }
   }]

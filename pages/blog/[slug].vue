@@ -1,29 +1,36 @@
 <script setup lang="ts">
 import { withoutTrailingSlash } from 'ufo'
-import type { BlogArticle } from '~/types'
 
 const route = useRoute()
 const { copy } = useCopyToClipboard()
 
-const { data: article } = await useAsyncData(route.path, () => queryContents('blog').path(route.path).first())
+const { data: article } = await useAsyncData(route.path, () => queryCollection('blog').path(route.path).first())
 if (!article.value) {
   throw createError({ statusCode: 404, statusMessage: 'Article not found', fatal: true })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () => queryContentV3('/blog')
-  .where({ _extension: 'md' })
-  .without(['body', 'excerpt'])
-  .sort({ date: -1 })
-  .findSurround(withoutTrailingSlash(route.path))
+const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
+  return getSurroundingCollectionItems('blog', withoutTrailingSlash(route.path), {
+    fields: ['description']
+  }).then((items) => {
+    // TODO: remove this once UContentSurround supports `path` field
+    return items.map(item => item
+      ? ({
+          ...item,
+          _path: item.path
+        })
+      : item)
+  })
+}
 )
 
 useSeoMeta({
-  title: article.value.head?.title || article.value.title,
-  description: article.value.head?.description || article.value.description
+  title: article.value.seo?.title || article.value.title,
+  description: article.value.seo?.description || article.value.description
 })
 
-const title = article.value.head?.title || article.value.title
-const description = article.value.head?.description || article.value.description
+const title = article.value.seo?.title || article.value.title
+const description = article.value.seo?.description || article.value.description
 useSeoMeta({
   titleTemplate: '%s · Nuxt Blog',
   title,
@@ -44,20 +51,20 @@ else {
 const authorTwitter = article.value.authors?.[0]?.twitter
 const socialLinks = computed(() => [{
   icon: 'i-simple-icons-linkedin',
-  to: `https://www.linkedin.com/sharing/share-offsite/?url=https://nuxt.com${article.value._path}`
+  to: `https://www.linkedin.com/sharing/share-offsite/?url=https://nuxt.com${article.value.path}`
 }, {
   icon: 'i-simple-icons-twitter',
-  to: `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${article.value.title}${authorTwitter ? ` by @${article.value.authors[0].twitter}` : ''}\n\n`)}https://nuxt.com${article.value._path}`
+  to: `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${article.value.title}${authorTwitter ? ` by @${article.value.authors[0].twitter}` : ''}\n\n`)}https://nuxt.com${article.value.path}`
 }])
 
 function copyLink() {
-  copy(`https://nuxt.com${article.value._path}`, { title: 'Copied to clipboard' })
+  copy(`https://nuxt.com${article.value.path}`, { title: 'Copied to clipboard' })
 }
 const links = [
   {
     icon: 'i-ph-pen-duotone',
     label: 'Edit this article',
-    to: `https://github.com/nuxt/nuxt.com/edit/main/content/${article.value._file}`,
+    to: `https://github.com/nuxt/nuxt.com/edit/main/content/${article.value.stem + '.' + article.value.extension}`,
     target: '_blank'
   }, {
     icon: 'i-ph-shooting-star-duotone',

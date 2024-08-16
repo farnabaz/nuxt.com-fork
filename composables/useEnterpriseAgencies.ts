@@ -14,25 +14,27 @@ export const useEnterpriseAgencies = () => {
 
     try {
       // const data = await queryContentV3('/enterprise/agencies').where({ _extension: 'md' }).find()
-      const data = await queryContents('content').path('/enterprise/agencies').all()
+      const data = await queryCollection('content').path('/enterprise/agencies').all()
 
-      agencies.value = data.map(agency => ({
-        ...agency,
-        services: (agency.services || []).map((service: string) => ({
-          key: slugify(service),
-          label: service
-        })),
-        regions: (agency.regions || []).map((region: string) => ({
-          key: slugify(region),
-          label: region
-        })),
-        location: agency.location
-          ? {
-              key: slugify(agency.location),
-              label: agency.location
-            }
-          : null
-      })) as Agency[]
+      agencies.value = data.map(agency => ({ ...agency.meta, ...agency })).map((agency) => {
+        return ({
+          ...agency,
+          services: (agency.services || []).map((service: string) => ({
+            key: slugify(service),
+            label: service
+          })),
+          regions: (agency.regions || []).map((region: string) => ({
+            key: slugify(region),
+            label: region
+          })),
+          location: agency.location
+            ? {
+                key: slugify(agency.location),
+                label: agency.location
+              }
+            : null
+        })
+      }) as Agency[]
     }
     catch (e) {
       agencies.value = []

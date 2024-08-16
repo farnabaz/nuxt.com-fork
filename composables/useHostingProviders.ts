@@ -15,7 +15,7 @@ export const useHostingProviders = () => {
       //   .without(['body', 'excerpt'])
       //   .sort({ date: -1 })
       //   .find()
-      const data = await queryContents('deploy')
+      const data = await queryCollection('deploy')
         .where('path', 'LIKE', '/deploy/%')
         .where('extension', '=', 'md')
         .order('date', 'DESC')

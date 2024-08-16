@@ -2,10 +2,10 @@
 const route = useRoute()
 const { fetchList, articles } = useBlog()
 
-const { data: page } = await useAsyncData(route.path, () => queryContents('content').path(route.path).first())
+const { data: page } = await useAsyncData(route.path, () => queryCollection('blog').path('/').first())
 
-const title = page.value.head?.title || page.value.title
-const description = page.value.head?.description || page.value.description
+const title = page.value?.seo?.title || page.value?.title
+const description = page.value?.seo?.description || page.value.description
 useHead({
   link: [
     {
@@ -35,7 +35,7 @@ await fetchList()
         <NewsletterForm class="flex-1 max-w-xs" :description="null" />
       </template>
       <template #description>
-        {{ page.description }}
+        {{ page?.description }}
         <UButton
           to="/blog/rss.xml"
           color="gray"

@@ -4,10 +4,10 @@ import type { Hosting } from '../../types'
 const route = useRoute()
 const { fetchList, providers } = useHostingProviders()
 
-const { data: page } = await useAsyncData(route.path, () => queryContents('content').path(route.path).first())
+const { data: page } = await useAsyncData(route.path, () => queryCollection('content').path(route.path).first())
 
-const title = page.value.head?.title || page.value.title
-const description = page.value.head?.description || page.value.description
+const title = page.value.seo?.title || page.value.title
+const description = page.value.seo?.description || page.value.description
 
 useSeoMeta({
   titleTemplate: '%s',

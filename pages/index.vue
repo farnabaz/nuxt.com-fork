@@ -11,7 +11,7 @@ if ('uwu' in route.query) {
   uwuCookie.value = enableUwu
 }
 
-const { data: page } = await useAsyncData('index', () => queryContents('content').path('/').first().then(page => page.body))
+const { data: page } = await useAsyncData('index', () => queryCollection('content').path('/').first().then(page => page.body))
 
 const videoModalOpen = ref(false)
 

@@ -7,19 +7,29 @@ const navigation = inject<Ref<NavItem[]>>('navigation')
 const route = useRoute()
 const { navKeyFromPath } = useContentHelpers()
 
-const { data: page } = await useAsyncData(route.path, () => queryContents('docs').path(route.path).first())
+const { data: page } = await useAsyncData(route.path, () => {
+  return queryCollection('docs').where('path', '=', route.path).first()
+})
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, async () => {
-  if (page.value.surround === false) {
-    return []
-  }
-  return queryContentV3('/docs')
-    .where({ _extension: 'md', navigation: { $ne: false } })
-    .without(['body', 'excerpt'])
-    .findSurround(withoutTrailingSlash(route.path))
+const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
+  // if (page.value.surround === false) {
+  //   return []
+  // }
+
+  return getSurroundingCollectionItems('docs', withoutTrailingSlash(route.path), {
+    fields: ['description']
+  }).then((items) => {
+    // TODO: remove this once UContentSurround supports `path` field
+    return items.map(item => item
+      ? ({
+          ...item,
+          _path: item.path
+        })
+      : item)
+  })
 })
 
 function findPageBreadcrumb(navigation?: NavItem[], page): NavItem[] {
@@ -63,7 +73,7 @@ const titleTemplate = computed(() => {
 const communityLinks = computed(() => [{
   icon: 'i-ph-pen-duotone',
   label: 'Edit this page',
-  to: `https://github.com/nuxt/nuxt/edit/main/docs/${page?.value?._file?.split('/').slice(1).join('/')}`,
+  to: `https://github.com/nuxt/nuxt/edit/main/docs/${(page?.value?.stem + '.' + page?.value?.extension)?.split('/').slice(1).join('/')}`,
   target: '_blank'
 }, {
   icon: 'i-ph-shooting-star-duotone',

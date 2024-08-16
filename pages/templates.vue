@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Template } from '../types'
 
-const { data: page } = await useAsyncData('templates', () => queryContents('content').path('/templates').first())
+const { data: page } = await useAsyncData('templates', () => queryCollection('content').path('/templates').first())
 
 const title = page.value.head?.title || page.value.title
 const description = page.value.head?.description || page.value.description

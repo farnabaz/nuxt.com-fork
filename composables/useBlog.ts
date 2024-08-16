@@ -13,14 +13,9 @@ export const useBlog = () => {
     }
 
     try {
-      // const data = await queryContentV3('/blog')
-      //   .where({ _extension: 'md' })
-      //   .without(['body', 'excerpt'])
-      //   .sort({ date: -1 })
-      //   .find()
-      const data = await queryContents('blog')
-        .where('path', 'LIKE', '/blog/%')
+      const data = await queryCollection('blog')
         .where('extension', '=', 'md')
+        .select('title', 'date', 'path', 'description', 'date', 'authors', 'image')
         .order('date', 'DESC')
         .all()
 

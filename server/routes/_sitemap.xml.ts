@@ -3,18 +3,14 @@ import { SitemapStream, streamToPromise } from 'sitemap'
 import type { H3Event } from 'h3'
 
 export default defineEventHandler(async (event: H3Event) => {
-  const docs = await $fetch('/api/content/query', {
-    query: {
-      q: 'SELECT * FROM content'
-    }
-  })
+  const docs = await queryCollection('docs').all()
 
   const sitemap = new SitemapStream({
     hostname: 'https://nuxt.com'
   })
   for (const doc of docs) {
     sitemap.write({
-      url: doc._path?.replace(/\/_dir$/, ''),
+      url: doc.path?.replace(/\/_dir$/, ''),
       changefreq: 'weekly'
     })
   }

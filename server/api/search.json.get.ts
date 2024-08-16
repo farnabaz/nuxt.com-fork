@@ -4,7 +4,7 @@ export default eventHandler(async (event) => {
   //     q: `SELECT * FROM content WHERE _type = 'markdown' AND path LIKE '/docs%'`
   //   }
   // })
-  const docs = await queryContents('content')
+  const docs = await queryCollection('content')
     .where('extension', '=', 'md')
     .where('path', 'LIKE', '/docs%')
     .all()

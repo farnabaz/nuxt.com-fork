@@ -2,7 +2,7 @@
 const route = useRoute()
 const { filteredAgencies, fetchList, services, regions } = useEnterpriseAgencies()
 
-const { data: page } = await useAsyncData(route.path, () => queryContents('content').path(route.path).first())
+const { data: page } = await useAsyncData(route.path, () => queryCollection('content').path(route.path).first())
 
 const title = page.value.head?.title || page.value.title
 const description = page.value.head?.description || page.value.description
@@ -37,7 +37,7 @@ await fetchList()
           <UPageCard
             v-for="(agency, index) in filteredAgencies"
             :key="index"
-            :to="agency._path"
+            :to="agency.path"
             :title="agency.title"
             :description="agency.description"
             :ui="{
@@ -48,11 +48,11 @@ await fetchList()
             }"
           >
             <template #icon>
-              <UColorModeAvatar :light="agency.logo.light" :dark="agency.logo.dark" size="lg" :ui="{ rounded: 'rounded-sm' }" />
+              <UColorModeAvatar :light="agency.logo?.light" :dark="agency.logo?.dark" size="lg" :ui="{ rounded: 'rounded-sm' }" />
             </template>
 
             <template #footer>
-              <UBadge :label="agency.location.label" color="gray" />
+              <UBadge :label="agency.location?.label" color="gray" />
             </template>
           </UPageCard>
         </UPageGrid>

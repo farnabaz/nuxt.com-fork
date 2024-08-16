@@ -13,7 +13,7 @@
     "test": "pnpm lint && pnpm typecheck"
   },
   "dependencies": {
-    "@farnabaz/content-next": "1.22.0",
+    "@farnabaz/content-next": "1.28.0",
     "@iconify-json/heroicons": "^1.1.24",
     "@iconify-json/logos": "^1.1.44",
     "@iconify-json/octicon": "^1.1.57",

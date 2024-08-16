@@ -5,20 +5,28 @@ import type { Hosting } from '~/types'
 const route = useRoute()
 const { slug } = route.params
 
-const { data: provider } = await useAsyncData(route.path, () => queryContents('content').path(route.path).first())
+const { data: provider } = await useAsyncData(route.path, () => queryCollection('content').path(route.path).first())
 if (!provider.value) {
   throw createError({ statusCode: 404, statusMessage: 'Hosting Platform not found', fatal: true })
 }
 
-const { data: surround } = await useAsyncData(`${route.path}-surround`, () => queryContentV3('/deploy')
-  .where({ _extension: 'md' })
-  .without(['body', 'excerpt'])
-  .sort({ featured: 1 })
-  .findSurround(withoutTrailingSlash(route.path))
+const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
+  return getSurroundingCollectionItems('deploy', withoutTrailingSlash(route.path), {
+    fields: ['description']
+  }).then((items) => {
+    // TODO: remove this once UContentSurround supports `path` field
+    return items.map(item => item
+      ? ({
+          ...item,
+          _path: item.path
+        })
+      : item)
+  })
+}
 )
 
-const title = provider.value.head?.title || provider.value.title
-const description = provider.value.head?.description || provider.value.description
+const title = provider.value.seo?.title || provider.value.title
+const description = provider.value.seo?.description || provider.value.description
 
 useSeoMeta({
   titleTemplate: 'Deploy Nuxt to %s',
