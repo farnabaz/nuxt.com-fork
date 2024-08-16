@@ -5,7 +5,7 @@ const { fetchList, articles } = useBlog()
 const { data: page } = await useAsyncData(route.path, () => queryCollection('blog').path('/').first())
 
 const title = page.value?.seo?.title || page.value?.title
-const description = page.value?.seo?.description || page.value.description
+const description = page.value?.seo?.description || page.value?.description
 useHead({
   link: [
     {

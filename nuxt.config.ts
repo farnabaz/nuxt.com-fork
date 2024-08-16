@@ -1,5 +1,5 @@
 import { ofetch } from 'ofetch'
-import { logger } from '@nuxt/kit'
+import { logger, addComponentsDir, createResolver } from '@nuxt/kit'
 import { isWindows } from 'std-env'
 import { defineNuxtConfig } from 'nuxt/config'
 
@@ -56,10 +56,10 @@ export default defineNuxtConfig({
   // @ts-ignore Type circular reference
   modules: [
     // 'nuxt-content-twoslash',
-    // '@nuxthub/core',
+    '@nuxthub/core',
     'nuxt-build-cache',
     '@farnabaz/content-next',
-    '@nuxtjs/mdc',
+    '@nuxt/content',
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxtjs/plausible',
@@ -174,6 +174,11 @@ export default defineNuxtConfig({
       fields: ['titleTemplate']
     },
     sources: {
+      content: {
+        driver: 'fs',
+        name: 'cotent',
+        base: 'content/tmp'
+      }
       // docsSource,
       // examplesSource
     },
