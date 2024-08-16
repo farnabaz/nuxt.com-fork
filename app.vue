@@ -2,13 +2,24 @@
 import { debounce } from 'perfect-debounce'
 import type { ParsedContent } from '@nuxt/content/dist/runtime/types'
 import './styles/twoslash.css'
+import type { ContentNavigationItem } from '@farnabaz/content-next'
 
 const search = ref(null)
 const colorMode = useColorMode()
 const { headerLinks, searchGroups, searchLinks } = useNavigation()
 const color = computed(() => colorMode.value === 'dark' ? '#020420' : 'white')
 
-const { data: navigation } = await useLazyAsyncData('navigation', () => getCollectionNavigation('docs'), { default: () => [] })
+function refinepath(item: ContentNavigationItem[]) {
+  item._path = item.path
+  if (item.children) {
+    item.children = item.children.map(refinepath)
+  }
+  return item
+}
+const { data: navigation } = await useLazyAsyncData('navigation', async () => {
+  const nav = await getCollectionNavigation('docs')
+  return refinepath(nav)
+}, { default: () => [] })
 const { data: files } = useLazyFetch<ParsedContent[]>('/api/search.json', {
   default: () => [],
   server: false
