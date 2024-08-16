@@ -30,8 +30,5 @@ const navigationLinks = computed(() => {
 
       <NuxtPage />
     </UPage>
-    <div class="hidden v3">
-      {{ navigationLinks }}
-    </div>
   </UContainer>
 </template>
