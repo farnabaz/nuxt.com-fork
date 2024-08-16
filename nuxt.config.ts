@@ -59,7 +59,7 @@ export default defineNuxtConfig({
     // '@nuxthub/core',
     'nuxt-build-cache',
     '@farnabaz/content-next',
-    '@nuxt/content',
+    '@nuxtjs/mdc',
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxtjs/plausible',
