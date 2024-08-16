@@ -167,7 +167,7 @@ export default defineNuxtConfig({
     }
   },
   contentV3: {
-    // database: 'nuxthub'
+    database: 'nuxthub'
   },
   content: {
     navigation: {
